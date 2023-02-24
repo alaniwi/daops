@@ -64,14 +64,14 @@ def parse_args():
 
     parser_subset = sub_parsers.add_parser('subset', help='subset data')
     parser_subset.add_argument('--area', '-a', type=area_arg, metavar='w,s,e,n')
-    parser_subset.add_argument('--time', '-t', type=time_window_arg, metavar='time_window',
+    parser_subset.add_argument('--time', '-t', type=str, metavar='time_window',
                                help='time window e.g. 1999-01-01T00:00:00,2100-12-30T00:00:00')
-    parser_subset.add_argument('--time-components', '-c', type=time_components_arg, metavar='time_components',
+    parser_subset.add_argument('--time-components', '-c', type=str, metavar='time_components',
                                help="time components e.g. month:dec,jan,feb or 'year:1970,1980|month:01,02,03'")
     parser_subset.add_argument('--levels', '-l', type=levels_arg,
                                metavar='levels', help='comma-separated list of levels')
     parser_subset.add_argument('--output-format', '-f', type=str, metavar='format',
-                               choices=('netcdf', 'nc', 'zarr'))
+                               choices=('netcdf', 'nc', 'zarr'), default='netcdf')
     parser_subset.add_argument('--output-dir', '-d', type=str, metavar='output_directory', required=True)
     parser_subset.add_argument('collection', type=str, nargs='+')
 
@@ -94,6 +94,7 @@ def main():
     args = parse_args()
     params = get_params(args)
     print(params)
+    params={'collection': ['/home/roocsdev/.mini-esgf-data/master/test_data/badc/cmip5/data/cmip5/output1/MOHC/HadGEM2-ES/rcp45/day/land/day/r1i1p1/latest/mrsos/mrsos_day_HadGEM2-ES_rcp45_r1i1p1_20051201-20151130.nc'], 'time': None, 'time_components': None, 'area': None, 'output_type': 'netcdf', 'output_dir': '/tmp/out/', 'apply_fixes': False}
     ret = subset(**params)
     print(ret.file_uris)
 
