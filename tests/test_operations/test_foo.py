@@ -21,8 +21,8 @@ def simple_test(out_dir='/tmp/out',
                 ):
 
     os.system(f'rm -f {out_dir}/*')
-    #os.system(f'ls -l {os.environ["ROOCS_CONFIG"]}')
-    #os.system(f'cat {os.environ["ROOCS_CONFIG"]}')
+    os.system(f'ls -l {os.environ["ROOCS_CONFIG"]}')
+    os.system(f'cat {os.environ["ROOCS_CONFIG"]}')
    
     #params = {'collection': [in_path], 'output_dir': out_dir}    
     params = {'collection': ['cmip5.output1.INM.inmcm4.rcp45.mon.ocean.Omon.r1i1p1.latest.zostoga'],
@@ -38,6 +38,9 @@ def simple_test(out_dir='/tmp/out',
 
 def simple_test2(tmpdir):
 
+    os.system(f'ls -l {os.environ["ROOCS_CONFIG"]}')
+    os.system(f'cat {os.environ["ROOCS_CONFIG"]}')
+
     print('running test 2')
     result = subset(
         CMIP5_IDS[0],
@@ -47,6 +50,10 @@ def simple_test2(tmpdir):
         apply_fixes=False,
     )
     #_check_output_nc(result)
+    print(f"ID + {CMIP5_IDS[0]}")
+    print(result.file_uris)
+    os.system(f"ls -l {result.file_uris[0]}")
+    
     ds = xr.open_dataset(result.file_uris[0], use_cftime=True)
     assert ds.time.shape == (192,)
 
